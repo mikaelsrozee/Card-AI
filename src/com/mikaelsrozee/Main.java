@@ -21,18 +21,4 @@ public class Main {
     game.startNewGame();
   }
 
-  public static void reportHandStatuses(Game game) {
-    for (Player player : game.getPlayers()) {
-      System.out.println(
-          "[DEBUG] " + player.getId() + " has " + player.getHeldCards().size() + " cards:");
-      StringBuilder stringBuilder = new StringBuilder();
-      for (Card card : player.getHeldCards()) {
-        stringBuilder.append(card.getSuit()).append("/").append(card.getValue()).append(", ");
-      }
-      System.out.println(stringBuilder.toString());
-    }
-
-    System.out.println("[DEBUG] " + "The deck has " + game.getDeck().getCards().size() + " cards.");
-  }
-
 }

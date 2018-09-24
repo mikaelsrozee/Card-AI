@@ -1,6 +1,5 @@
 package com.mikaelsrozee.game.games;
 
-import com.mikaelsrozee.Main;
 import com.mikaelsrozee.game.Game;
 import com.mikaelsrozee.game.objects.Card;
 import com.mikaelsrozee.game.objects.Card.EnumValue;
@@ -31,6 +30,7 @@ public class Cheat extends Game {
       setCurrentTurn(remainingPlayers.get(getNextTurnIndex()));
       turnNumber++;
 
+      // TODO: Fix this
       if (getCurrentTurn().getHeldCards().size() == 0) {
         remainingPlayers.remove(getCurrentTurn());
         System.out.println("[DEBUG] Player " + getCurrentTurn().getId()
@@ -39,12 +39,13 @@ public class Cheat extends Game {
         turnNumber++;
       }
 
+      // TODO: Generate a HTML file version of this that looks better.
       System.out.println(
           "[DEBUG] It is " + getCurrentTurn().getId() + "'s turn. This is turn " + turnNumber
               + ".");
       getCurrentTurn().takeTurn(this);
       System.out.println("[DEBUG] " + getCurrentTurn().getId() + " has taken their turn.");
-      Main.reportHandStatuses(this);
+      reportHandStatuses(this);
       previousPlayer = getCurrentTurn();
       for (Player player : remainingPlayers) {
         if (!previousPlayer.equals(player)) {
@@ -83,8 +84,24 @@ public class Cheat extends Game {
         player.setHeldCards(newHeldCards);
         System.out.println("[DEBUG] Player " + previousPlayer.getId() + " was not cheating.");
       }
-      Main.reportHandStatuses(this);
+      reportHandStatuses(this);
     }
+  }
+
+  private void reportHandStatuses(Game game) {
+    for (Player player : game.getPlayers()) {
+      if (this.remainingPlayers.contains(player)) {
+        System.out.println(
+            "[DEBUG] " + player.getId() + " has " + player.getHeldCards().size() + " cards:");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Card card : player.getHeldCards()) {
+          stringBuilder.append(card.getSuit()).append("/").append(card.getValue()).append(", ");
+        }
+        System.out.println(stringBuilder.toString());
+      }
+    }
+
+    System.out.println("[DEBUG] " + "The pile has " + game.getDeck().getCards().size() + " cards.");
   }
 
   private int getNextTurnIndex() {
