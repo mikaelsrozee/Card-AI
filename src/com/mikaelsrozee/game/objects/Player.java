@@ -24,7 +24,9 @@ public class Player {
     this.heldCards = heldCards;
   }
 
-  /** Called at the start of the player's turn if it is their turn. */
+  /**
+   * Called at the start of the player's turn if it is their turn.
+   */
   public void takeTurn(Game game) {
     System.out.println("[DEBUG] Player ID '" + getId() + "' is now taking their turn.");
 
@@ -43,11 +45,13 @@ public class Player {
         int maxQuantity = 0;
 
         if (playedCardIndex != -1) {
-          if (playedCardIndex != values.size() - 1)
+          if (playedCardIndex != values.size() - 1) {
             valueAbove = values.get(playedCardIndex + 1);
+          }
 
-          if (playedCardIndex > 0)
+          if (playedCardIndex > 0) {
             valueBelow = values.get(playedCardIndex - 1);
+          }
         }
 
         /* Create a map of the quantity of each value in the hand. */
@@ -76,7 +80,8 @@ public class Player {
         else if (cheat.getRemainingPlayers().size() > 3) {
           /* Search values to see if a 'truthful' move can be made. */
           for (EnumValue value : cardCounter.keySet()) {
-            if (value.equals(playedCardValue) || value.equals(valueAbove) || value.equals(valueBelow)) {
+            if (value.equals(playedCardValue) || value.equals(valueAbove) || value
+                .equals(valueBelow)) {
               /* If this is the best truthful move found so far, set it to be played. */
               if (cardCounter.get(value) > quantityToPlay) {
                 valueToPlay = value;
@@ -114,7 +119,9 @@ public class Player {
     }
   }
 
-  /** Called whenever another player has made a move, but before their turn is over. */
+  /**
+   * Called whenever another player has made a move, but before their turn is over.
+   */
   public void onOtherPlayersGo(Game game) {
     switch (game.getId()) {
       case "Cheat":
@@ -141,19 +148,22 @@ public class Player {
         if (cheat.getCurrentTurn().getHeldCards().size() == 0) {
           int pos = 0;
           for (Player player : cheat.getRemainingPlayers()) {
-            if (game.getDeck().getCards().size() + getHeldCards().size() >= player.getHeldCards().size()) {
+            if (game.getDeck().getCards().size() + getHeldCards().size() >= player.getHeldCards()
+                .size()) {
               pos++;
             }
           }
 
           /* and if calling cheat won't cause you to be in a losing situation. */
-          if (pos < 2)
+          if (pos < 2) {
             callingCheat = true;
+          }
         }
 
         /* If calling cheat, call cheat. */
-        if (callingCheat)
+        if (callingCheat) {
           cheat.callCheat(this);
+        }
     }
   }
 

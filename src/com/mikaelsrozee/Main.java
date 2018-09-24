@@ -23,7 +23,8 @@ public class Main {
 
   public static void reportHandStatuses(Game game) {
     for (Player player : game.getPlayers()) {
-      System.out.println("[DEBUG] " + player.getId() + " has " + player.getHeldCards().size() + " cards:");
+      System.out.println(
+          "[DEBUG] " + player.getId() + " has " + player.getHeldCards().size() + " cards:");
       StringBuilder stringBuilder = new StringBuilder();
       for (Card card : player.getHeldCards()) {
         stringBuilder.append(card.getSuit()).append("/").append(card.getValue()).append(", ");

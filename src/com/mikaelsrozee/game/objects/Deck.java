@@ -33,13 +33,15 @@ public class Deck {
 
     int size = list.size();
     if (size < 5 || list instanceof RandomAccess) {
-      for (int i=size; i>1; i--)
-        swap(list, i-1, rnd.nextInt(i));
+      for (int i = size; i > 1; i--) {
+        swap(list, i - 1, rnd.nextInt(i));
+      }
     } else {
       Object arr[] = list.toArray();
 
-      for (int i=size; i>1; i--)
-        swap(Arrays.asList(arr), i-1, rnd.nextInt(i));
+      for (int i = size; i > 1; i--) {
+        swap(Arrays.asList(arr), i - 1, rnd.nextInt(i));
+      }
 
       ListIterator it = list.listIterator();
       for (Object anArr : arr) {

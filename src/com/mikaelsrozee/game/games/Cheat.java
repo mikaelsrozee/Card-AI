@@ -33,19 +33,23 @@ public class Cheat extends Game {
 
       if (getCurrentTurn().getHeldCards().size() == 0) {
         remainingPlayers.remove(getCurrentTurn());
-        System.out.println("[DEBUG] Player " + getCurrentTurn().getId() + " has ran out of cards and so won the game.");
+        System.out.println("[DEBUG] Player " + getCurrentTurn().getId()
+            + " has ran out of cards and so won the game.");
         setCurrentTurn(remainingPlayers.get(getNextTurnIndex()));
         turnNumber++;
       }
 
-      System.out.println("[DEBUG] It is " + getCurrentTurn().getId() + "'s turn. This is turn " + turnNumber + ".");
+      System.out.println(
+          "[DEBUG] It is " + getCurrentTurn().getId() + "'s turn. This is turn " + turnNumber
+              + ".");
       getCurrentTurn().takeTurn(this);
       System.out.println("[DEBUG] " + getCurrentTurn().getId() + " has taken their turn.");
       Main.reportHandStatuses(this);
       previousPlayer = getCurrentTurn();
       for (Player player : remainingPlayers) {
-        if (!previousPlayer.equals(player))
+        if (!previousPlayer.equals(player)) {
           player.onOtherPlayersGo(this);
+        }
       }
     }
 
@@ -54,7 +58,9 @@ public class Cheat extends Game {
 
   public void callCheat(Player player) {
     if (getDeck().getCards().size() > 0) {
-      System.out.println("[DEBUG] Player " + player.getId() + " has called cheat on " + previousPlayer.getId() + ".");
+      System.out.println(
+          "[DEBUG] Player " + player.getId() + " has called cheat on " + previousPlayer.getId()
+              + ".");
       List<Card> cards = getDeck().getCards();
 
       boolean wasCheating = false;

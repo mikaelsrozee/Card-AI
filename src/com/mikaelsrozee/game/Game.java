@@ -66,12 +66,12 @@ public class Game {
     return deck;
   }
 
-  public List<Player> getPlayers() {
-    return players;
-  }
-
   public void setDeck(Deck deck) {
     this.deck = deck;
+  }
+
+  public List<Player> getPlayers() {
+    return players;
   }
 
   public Player getCurrentTurn() {
