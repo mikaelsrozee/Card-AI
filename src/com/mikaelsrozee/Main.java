@@ -3,7 +3,6 @@ package com.mikaelsrozee;
 import com.mikaelsrozee.game.Game;
 import com.mikaelsrozee.game.games.Cheat;
 import com.mikaelsrozee.game.objects.Card;
-import com.mikaelsrozee.game.objects.Deck;
 import com.mikaelsrozee.game.objects.Player;
 
 public class Main {
