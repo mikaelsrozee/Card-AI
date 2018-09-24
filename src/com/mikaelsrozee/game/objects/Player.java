@@ -72,9 +72,8 @@ public class Player {
 
         if (game.getDeck().getCards().size() == 0) {
           /* Make a random move. */
-          Random rand = new Random();
-          valueToPlay = heldCards.get(rand.nextInt(heldCards.size())).getValue();
-          quantityToPlay = cardCounter.get(valueToPlay);
+          valueToPlay = valueWithMaxQuantity;
+          quantityToPlay = maxQuantity;
         }
         /* If there are more than 3 players remaining, play safe. */
         else if (cheat.getRemainingPlayers().size() > 3) {
