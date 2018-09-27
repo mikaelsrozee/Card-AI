@@ -19,11 +19,6 @@ public class Player {
     this.id = id;
   }
 
-  public Player(String id, List<Card> heldCards) {
-    this.id = id;
-    this.heldCards = heldCards;
-  }
-
   /**
    * Called at the start of the player's turn if it is their turn.
    */
