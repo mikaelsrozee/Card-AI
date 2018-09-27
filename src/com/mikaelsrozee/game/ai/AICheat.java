@@ -1,7 +1,7 @@
 package com.mikaelsrozee.game.ai;
 
 import com.mikaelsrozee.game.Game;
-import com.mikaelsrozee.game.games.Cheat;
+import com.mikaelsrozee.game.games.GameCheat;
 import com.mikaelsrozee.game.objects.Card;
 import com.mikaelsrozee.game.objects.Card.EnumValue;
 import com.mikaelsrozee.game.objects.Player;
@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class CheatAI extends Player {
+public class AICheat extends Player {
 
-  public CheatAI(String id) {
+  public AICheat(String id) {
     super(id);
   }
 
@@ -26,8 +26,8 @@ public class CheatAI extends Player {
     System.out.println("[DEBUG] Player ID '" + getId() + "' is now taking their turn.");
 
     switch (game.getId()) {
-      case "Cheat":
-        Cheat cheat = (Cheat) game;
+      case "GameCheat":
+        GameCheat cheat = (GameCheat) game;
         /* Initialise data set to base decisions off of. */
         EnumValue playedCardValue = cheat.getPreviousMoveValue();
         List<EnumValue> values = Arrays.asList(EnumValue.values());
@@ -119,10 +119,10 @@ public class CheatAI extends Player {
    */
   @Override
   public void onOtherPlayersGo(Game game) {
-    if (!Objects.equals(game.getId(), "Cheat"))
+    if (!Objects.equals(game.getId(), "GameCheat"))
       return;
 
-    Cheat cheat = (Cheat) game;
+    GameCheat cheat = (GameCheat) game;
     /* Create a map of the quantity of each value in the hand. */
     HashMap<EnumValue, Integer> cardCounter = new HashMap<>();
 

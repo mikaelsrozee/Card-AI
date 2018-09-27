@@ -8,20 +8,20 @@ import com.mikaelsrozee.game.objects.Player;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Cheat extends Game {
+public class GameCheat extends Game {
 
   private int turnNumber, previousMoveQuantity = 0;
   private EnumValue previousMoveValue = null;
   private Player previousPlayer = null;
   private List<Player> remainingPlayers = new LinkedList<>();
 
-  public Cheat() {
-    super("Cheat");
+  public GameCheat() {
+    super("GameCheat");
   }
 
   @Override
   public void startNewGame() {
-    System.out.println("[DEBUG] Request to start game of Cheat received.");
+    System.out.println("[DEBUG] Request to start game of GameCheat received.");
     remainingPlayers.addAll(getPlayers());
     System.out.println("[DEBUG] Players in game: " + getPlayers().toString());
     dealAllCards();
@@ -78,7 +78,7 @@ public class Cheat extends Game {
       }
     }
 
-    System.out.println("[LOG] Game of Cheat has ended.");
+    System.out.println("[LOG] Game of GameCheat has ended.");
     StringBuilder losers = new StringBuilder();
     losers.append("[LOG] Losers:");
     for (Player loser : remainingPlayers)
