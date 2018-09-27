@@ -95,13 +95,14 @@ public class Player {
             quantityToPlay = cardCounter.get(valueToPlay);
           }
         }
-        /* If there are three players remaining, play risky. */
-        else {
+        else /* If there are three players remaining, play risky. */ {
           valueToPlay = valueWithMaxQuantity;
           quantityToPlay = maxQuantity;
         }
+
         /* Make the move decided. */
         Iterator<Card> iterator = getHeldCards().iterator();
+        System.out.println("[DEBUG] " + getId() + " played " + quantityToPlay + " " + valueToPlay);
         while (iterator.hasNext()) {
           Card card = iterator.next();
 
@@ -137,12 +138,14 @@ public class Player {
         }
 
         boolean callingCheat = false;
-        for (EnumValue value : cardCounter.keySet()) {
-          /* If you own enough of that card for them to by lying, call cheat. */
-          if (cardCounter.get(value) > 4 - cardCounter.get(value)) {
+        /* If you own enough of that card for them to by lying, call cheat. */
+        if (cardCounter.containsKey(cheat.getPreviousMoveValue())) {
+          if (cardCounter.get(cheat.getPreviousMoveValue()) > 4 - cheat.getPreviousMoveQuantity()) {
+            System.out.println("[DEBUG] " + getId() + " is calling cheat because they have " + cardCounter.get(cheat.getPreviousMoveValue()) + " " + cheat.getPreviousMoveValue());
             callingCheat = true;
           }
         }
+
         /* If that was the player's final move */
         if (cheat.getCurrentTurn().getHeldCards().size() == 0) {
           int pos = 0;
@@ -155,6 +158,7 @@ public class Player {
 
           /* and if calling cheat won't cause you to be in a losing situation. */
           if (pos < 2) {
+            System.out.println("[DEBUG] " + getId() + " is calling cheat because it was " + cheat.getCurrentTurn().getId() + "'s final turn and it was safe to do so.");
             callingCheat = true;
           }
         }

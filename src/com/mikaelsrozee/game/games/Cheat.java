@@ -41,13 +41,21 @@ public class Cheat extends Game {
       System.out.println(
           "[DEBUG] It is " + getCurrentTurn().getId() + "'s turn. This is turn " + turnNumber
               + ".");
+      reportHandStatuses(this);
 
       /* Check to see if a player has successfully lost all their cards. */
       if (previousPlayer != null) {
         if (previousPlayer.getHeldCards().size() == 0) {
           remainingPlayers.remove(previousPlayer);
-          System.out.println("[DEBUG] Player " + previousPlayer.getId()
+          System.out.println("[DEBUG] " + previousPlayer.getId()
               + " has ran out of cards and so won the game.");
+
+          setCurrentTurn(remainingPlayers.get(getNextTurnIndex()));
+          turnNumber++;
+
+          System.out.println(
+              "[DEBUG] It is " + getCurrentTurn().getId() + "'s turn. This is turn " + turnNumber
+                  + ".");
 
           /* If there are no longer enough players, end the game. */
           if (remainingPlayers.size() < 3)
@@ -60,7 +68,6 @@ public class Cheat extends Game {
 
       /* Print information about the state of the game after their turn. */
       System.out.println("[DEBUG] " + getCurrentTurn().getId() + " has taken their turn.");
-      reportHandStatuses(this);
 
       /* Instruct the other players to call cheat if they want to. */
       previousPlayer = getCurrentTurn();
@@ -106,7 +113,6 @@ public class Cheat extends Game {
         player.setHeldCards(newHeldCards);
         System.out.println("[DEBUG] Player " + previousPlayer.getId() + " was not cheating.");
       }
-      reportHandStatuses(this);
     }
   }
 
