@@ -23,7 +23,7 @@ public class Player {
   /**
    * Called whenever another player has made a move, but before their turn is over.
    */
-  public void onOtherPlayersGo(Game game) {
+  public void onOtherPlayersGo(Game game, String flag) {
 
   }
 

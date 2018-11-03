@@ -126,7 +126,7 @@ public class AICheat extends Player {
    * Called whenever another player has made a move, but before their turn is over.
    */
   @Override
-  public void onOtherPlayersGo(Game game) {
+  public void onOtherPlayersGo(Game game, String flag) {
     if (!Objects.equals(game.getId(), "GameCheat"))
       return;
 
