@@ -1,6 +1,7 @@
 package com.mikaelsrozee.game.games;
 
 import com.mikaelsrozee.game.Game;
+import com.mikaelsrozee.game.ai.AICheat;
 import com.mikaelsrozee.game.objects.Card;
 import com.mikaelsrozee.game.objects.Card.EnumValue;
 import com.mikaelsrozee.game.objects.Deck;
@@ -92,6 +93,13 @@ public class GameCheat extends Game {
           "[DEBUG] Player " + player.getId() + " has called cheat on " + previousPlayer.getId()
               + ".");
       List<Card> cards = getDeck().getCards();
+
+      /* Clear the memory of the current deck */
+      for (Player aPlayer : getPlayers()) {
+        if (aPlayer instanceof AICheat) {
+          ((AICheat) aPlayer).clearMemory();
+        }
+      }
 
       boolean wasCheating = false;
       for (int i = 1; i < previousMoveQuantity; i++) {

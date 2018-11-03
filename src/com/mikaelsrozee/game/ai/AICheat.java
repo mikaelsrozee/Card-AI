@@ -14,6 +14,8 @@ import java.util.Random;
 
 public class AICheat extends Player {
 
+  private HashMap<EnumValue, Integer> playedCardsMap = new HashMap<>();
+
   public AICheat(String id) {
     super(id);
   }
@@ -98,6 +100,7 @@ public class AICheat extends Player {
         /* Make the move decided. */
         Iterator<Card> iterator = getHeldCards().iterator();
         System.out.println("[DEBUG] " + getId() + " played " + quantityToPlay + " " + valueToPlay);
+
         while (iterator.hasNext()) {
           Card card = iterator.next();
 
@@ -111,6 +114,11 @@ public class AICheat extends Player {
             cheat.setPreviousMoveQuantity(quantityToPlay);
           }
         }
+
+        /* Save move made to memory */
+        if (!playedCardsMap.containsKey(valueToPlay))
+          playedCardsMap.put(valueToPlay, quantityToPlay);
+        else playedCardsMap.replace(valueToPlay, playedCardsMap.get(valueToPlay) + quantityToPlay);
     }
   }
 
@@ -123,9 +131,11 @@ public class AICheat extends Player {
       return;
 
     GameCheat cheat = (GameCheat) game;
-    /* Create a map of the quantity of each value in the hand. */
+
+    /* Create a map of the quantity of each value that the AI can account for. */
     HashMap<EnumValue, Integer> cardCounter = new HashMap<>();
 
+    /* Add held cards to cardCounter */
     for (Card card : getHeldCards()) {
       if (!cardCounter.containsKey(card.getValue())) {
         cardCounter.put(card.getValue(), 1);
@@ -134,12 +144,21 @@ public class AICheat extends Player {
       }
     }
 
+    /* Add previously played cards to cardCounter */
+    for (EnumValue value : playedCardsMap.keySet()) {
+      if (!cardCounter.containsKey(value)) {
+        cardCounter.put(value, playedCardsMap.get(value));
+      } else {
+        cardCounter.replace(value, cardCounter.get(value) + playedCardsMap.get(value));
+      }
+    }
+
     boolean callingCheat = false;
 
-    /* If you own enough of that card for them to by lying, call cheat. */
+    /* If you can account for enough of that card for them to by lying, call cheat. */
     if (cardCounter.containsKey(cheat.getPreviousMoveValue())) {
       if (cardCounter.get(cheat.getPreviousMoveValue()) > 4 - cheat.getPreviousMoveQuantity()) {
-        System.out.println("[DEBUG] " + getId() + " is calling cheat because they have " + cardCounter.get(cheat.getPreviousMoveValue()) + " " + cheat.getPreviousMoveValue());
+        System.out.println("[DEBUG] " + getId() + " is calling cheat because they know about " + cardCounter.get(cheat.getPreviousMoveValue()) + " " + cheat.getPreviousMoveValue());
         callingCheat = true;
       }
     }
@@ -165,5 +184,16 @@ public class AICheat extends Player {
     if (callingCheat) {
       cheat.callCheat(this);
     }
+
+    /* Save this move to memory */
+    if (!playedCardsMap.containsKey(cheat.getPreviousMoveValue())) {
+      playedCardsMap.put(cheat.getPreviousMoveValue(), cheat.getPreviousMoveQuantity());
+    } else {
+      playedCardsMap.replace(cheat.getPreviousMoveValue(), playedCardsMap.get(cheat.getPreviousMoveValue()) + cheat.getPreviousMoveQuantity());
+    }
+  }
+
+  public void clearMemory() {
+    playedCardsMap.clear();
   }
 }
