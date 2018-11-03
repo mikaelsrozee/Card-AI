@@ -21,3 +21,6 @@ build
 eclipse
 run
 *.xlsx
+nbproject
+build.xml
+manifest.mf
